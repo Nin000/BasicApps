@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"indentRainbow.errorColor": "rgba(128,32,32,0.3)"
+	}
+}
