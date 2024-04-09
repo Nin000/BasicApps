@@ -1,8 +1,29 @@
-import bs4
+from bs4 import BeautifulSoup
 import requests
+import csv
 
-resultado = requests.get("https://escueladirecta-blog.blogspot.com/2021/10/encapsulamiento-pilares-de-la.html")
+source = requests.get('https://escueladirecta-blog.blogspot.com').text
 
-sopa = bs4.BeautifulSoup(resultado.text, 'lxml')
+sopa = BeautifulSoup(source, 'lxml')
 
-print(sopa.select('title'))
+csv_file = open('scrap_result.csv', 'w')
+
+csv_writer = csv.writer(csv_file)
+
+csv_writer.writerow(['titulo', 'autor', 'link'])
+
+for article in sopa.find_all('article', class_='post-outer-container'):
+
+    titulo = article.find('h3', class_='post-title entry-title').find('div', class_='r-snippetized').text
+
+    autor = article.find('span').text
+
+    link = article.find('h3', class_='post-title entry-title').a['href']
+
+    print(titulo, autor, link)
+
+    print()
+
+    csv_writer.writerow([titulo, autor, link])
+
+csv_file.close()
