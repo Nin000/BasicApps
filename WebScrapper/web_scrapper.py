@@ -15,15 +15,16 @@ csv_writer.writerow(['titulo', 'autor', 'link'])
 for article in sopa.find_all('article', class_='post-outer-container'):
 
     titulo = article.find('h3', class_='post-title entry-title').find('div', class_='r-snippetized').text
+    print(titulo)
 
-    autor = article.find('span').text
+    autor = article.find("a", class_="g-profile").text
+    print(autor)
 
     link = article.find('h3', class_='post-title entry-title').a['href']
-
-    print(titulo, autor, link)
+    print(link)
 
     print()
 
-    csv_writer.writerow([titulo, autor, link])
+    csv_writer.writerow([titulo.strip() , autor.strip() , link.strip()])
 
 csv_file.close()
